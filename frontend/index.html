@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System — Cloud Dashboard</title>
+    <meta name="description" content="A cloud-native Library Management System built with AWS services, DynamoDB, SNS, and SQS on Floci.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ── Ambient Background Orbs ────────────────────────────── -->
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+
+    <!-- ── Toast Container ────────────────────────────────────── -->
+    <div id="toast-container"></div>
+
+    <!-- ── Header ─────────────────────────────────────────────── -->
+    <header id="main-header">
+        <div class="header-content">
+            <div class="brand">
+                <div class="brand-icon">📚</div>
+                <div>
+                    <h1 class="brand-title">CloudShelf</h1>
+                    <p class="brand-subtitle">AWS-Powered Library Management</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="status-badge" id="status-badge">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Connecting...</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ── Main Content ───────────────────────────────────────── -->
+    <main id="main-content">
+        <!-- Borrower Identity Card -->
+        <section class="borrower-card" id="borrower-section">
+            <div class="borrower-inner">
+                <div class="borrower-label">
+                    <span class="borrower-icon">🪪</span>
+                    Library Card Holder
+                </div>
+                <input
+                    type="text"
+                    id="borrower-name"
+                    placeholder="Enter your name to borrow books..."
+                    autocomplete="off"
+                    spellcheck="false"
+                >
+            </div>
+        </section>
+
+        <!-- Stats Bar -->
+        <section class="stats-bar" id="stats-bar">
+            <div class="stat-item">
+                <span class="stat-value" id="stat-total">—</span>
+                <span class="stat-label">Total Books</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-value" id="stat-available">—</span>
+                <span class="stat-label">Available</span>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <span class="stat-value" id="stat-borrowed">—</span>
+                <span class="stat-label">Checked Out</span>
+            </div>
+        </section>
+
+        <!-- Book Catalog Grid -->
+        <section class="catalog-section">
+            <h2 class="section-title" id="catalog-title">Book Catalog</h2>
+            <div class="book-grid" id="book-grid">
+                <!-- Populated by app.js -->
+                <div class="loading-state" id="loading-state">
+                    <div class="spinner"></div>
+                    <p>Loading catalog from DynamoDB...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ── Footer ─────────────────────────────────────────────── -->
+    <footer id="main-footer">
+        <p>CloudShelf LMS &middot; Powered by <strong>DynamoDB</strong> · <strong>SNS</strong> · <strong>SQS</strong> · <strong>Floci</strong></p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+services:
+  # ──────────────────────────────────────────────────────────────
+  # Local AWS Engine (Floci Emulator)
+  # ──────────────────────────────────────────────────────────────
+  floci:
+    image: floci/floci:latest-compat
+    container_name: lms-floci
+    ports:
+      - "4566:4566"
+    volumes:
+      - ./local-aws-init:/etc/localstack/init/ready.d/
+    environment:
+      - FLOCI_STORAGE_MODE=memory
+      - FLOCI_HOSTNAME=floci
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:4566/_localstack/health || exit 1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  # ──────────────────────────────────────────────────────────────
+  # LMS API Server (Flask)
+  # ──────────────────────────────────────────────────────────────
+  lms-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lms-api
+    ports:
+      - "3000:3000"
+    environment:
+      - AWS_ENDPOINT_URL=http://floci:4566
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+    command: python src/server.py
+    depends_on:
+      floci:
+        condition: service_healthy
+
+  # ──────────────────────────────────────────────────────────────
+  # Inventory Worker (SQS Poller)
+  # ──────────────────────────────────────────────────────────────
+  lms-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lms-worker
+    environment:
+      - AWS_ENDPOINT_URL=http://floci:4566
+      - AWS_DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+    command: python src/inventory_worker.py
+    depends_on:
+      floci:
+        condition: service_healthy

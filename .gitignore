@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Environment
+.env
+
+# Floci persistent data
+data/
+
+# Node (legacy)
+node_modules/
+
+# OS
+.DS_Store
