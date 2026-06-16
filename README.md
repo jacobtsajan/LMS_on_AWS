@@ -138,7 +138,7 @@ Go to [http://localhost:3000](http://localhost:3000). Try entering your name and
 
 ---
 
-## Troubleshooting & Gotchas
+## Troubleshooting 
 
 ### 1. `docker: unknown command: docker compose` / `unknown shorthand flag: -d`
 If your terminal returns this error while running with `sudo`, it means your Docker Compose V2 plugin is installed only within the user profile (e.g. `~/.docker/cli-plugins/`) rather than system-wide.
